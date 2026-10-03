@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../widgets/article_card.dart';
 import '../auth/providers/home_provider.dart';
-
+import '../../../../core/theme/theme_provider.dart';
 import 'package:go_router/go_router.dart';
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -44,6 +44,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             icon: const Icon(Icons.search),
             onPressed: () {
               context.push('./search');
+            },
+
+          ),
+
+          //  this button we are using for theme
+          IconButton(
+            icon: Icon(
+              ref.watch(themeProvider) == ThemeMode.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            onPressed: () {
+              ref.read(themeProvider.notifier).toggleTheme();
             },
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../presentation/features/auth/screens/login_screen.dart';
+import '../../presentation/features/bookmarks/screens/bookmarks_screen.dart';
 import '../../presentation/features/home/home_screen.dart';
 import '../../presentation/features/search/screens/search_screen.dart';
 
@@ -17,6 +18,11 @@ final GoRouter appRouter = GoRouter(
     return null;
   },
   routes: [
+
+    GoRoute(
+      path: '/bookmarks',
+      builder: (context, state) => const BookmarksScreen(),
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),

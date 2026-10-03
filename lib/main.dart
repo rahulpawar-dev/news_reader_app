@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'core/routing/app_router.dart';
 import 'data/datasources/local/news_local_datasource.dart';
+import 'core/theme/theme_provider.dart';
 
 void main() async {
   // Ensure bindings are initialized before calling async code
@@ -15,7 +16,7 @@ void main() async {
   // Open the auth box for session management
   await Hive.openBox('auth_box');
   await Hive.openBox('bookmarks_box');
-
+  await Hive.openBox('settings_box');
   runApp(
     // ProviderScope is required for Riverpod to work
     const ProviderScope(
@@ -24,11 +25,15 @@ void main() async {
   );
 }
 
-class NewsReaderApp extends StatelessWidget {
+class NewsReaderApp extends ConsumerWidget { // 1. Changed to ConsumerWidget
   const NewsReaderApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) { // 2. Added WidgetRef
+
+    // 3. Listen to the current theme saved in Riverpod & Hive
+    final currentThemeMode = ref.watch(themeProvider);
+
     return MaterialApp.router(
       title: 'News Reader',
       debugShowCheckedModeBanner: false,
@@ -46,7 +51,7 @@ class NewsReaderApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      themeMode: ThemeMode.system, // We will update this to persist user preference later
+      themeMode: currentThemeMode, // 4. Apply the Riverpod state here!
       routerConfig: appRouter,
     );
   }
