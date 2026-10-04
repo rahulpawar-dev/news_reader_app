@@ -83,7 +83,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 return ArticleCard(
                   article: articles[index],
                   onTap: () {
-                    // ✅ Fixed: Now it only pushes ONE screen and passes ONE article
+                    // ixed: Now it only pushes ONE screen and passes ONE article
                     context.push('/article-detail', extra: articles[index]);
                   },
                 );

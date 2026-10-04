@@ -39,9 +39,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final query = _searchController.text.trim();
 
     if (query.isNotEmpty) {
-      // ✅ 1. Add to search history
+      //1. Add to search history
       ref.read(searchHistoryProvider.notifier).addSearchTerm(query);
-      // ✅ 2. Perform the actual search
+      //2. Perform the actual search
       ref.read(searchProvider.notifier).searchArticles(query);
     }
   }
@@ -81,7 +81,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         ],
       ),
 
-      // ✅ Here is the fixed body logic!
+      // Here is the fixed body logic!
       body: _searchController.text.isEmpty
           ? _buildSearchHistory(searchHistory, ref) // Show history if typing nothing
           : searchState.when(
@@ -109,7 +109,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     );
   }
 
-  // ✅ The new widget that displays your Search History list
+  //  The new widget that displays your Search History list
   Widget _buildSearchHistory(List<String> history, WidgetRef ref) {
     if (history.isEmpty) {
       return const Center(child: Text('Type a keyword to search.'));

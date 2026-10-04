@@ -41,9 +41,9 @@ class BookmarksScreen extends ConsumerWidget {
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: 20),
               child: const Icon(Icons.delete, color: Colors.white, size: 30),
-            ), // ✅ Closed the container properly
+            ), // Closed the container properly
             onDismissed: (direction) {
-              // ✅ Actually removes the bookmark from Hive
+              //  Actually removes the bookmark from Hive
               ref.read(bookmarkProvider.notifier).toggleBookmark(article);
 
               // Show a quick popup confirming deletion
@@ -51,7 +51,7 @@ class BookmarksScreen extends ConsumerWidget {
                 const SnackBar(content: Text('Bookmark removed')),
               );
             },
-            // ✅ The child property holds the ArticleCard!
+            // The child property holds the ArticleCard!
             child: ArticleCard(
               article: article,
               onTap: () {
