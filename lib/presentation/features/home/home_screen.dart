@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../widgets/article_card.dart';
+import '../../widgets/custom_drawer.dart';
 import '../auth/providers/home_provider.dart';
 import '../../../../core/theme/theme_provider.dart';
 import 'package:go_router/go_router.dart';
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -37,18 +39,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final newsState = ref.watch(homeProvider);
 
     return Scaffold(
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         title: const Text('Top Headlines'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              context.push('./search');
+              // Usually it's better to use an absolute path like '/search' instead of './search'
+              context.push('/search');
             },
-
           ),
-
-          //  this button we are using for theme
+          // Theme toggle button
           IconButton(
             icon: Icon(
               ref.watch(themeProvider) == ThemeMode.dark
@@ -64,7 +66,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: newsState.when(
         data: (articles) {
           if (articles.isEmpty) {
-            return const Center(child: Text('No articles found.')); // Empty state[cite: 2]
+            return const Center(child: Text('No articles found.'));
           }
           return RefreshIndicator(
             onRefresh: () => ref.read(homeProvider.notifier).refresh(),
@@ -75,26 +77,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 if (index == articles.length) {
                   return const Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Center(child: CircularProgressIndicator()), // Infinite scroll loading[cite: 2]
+                    child: Center(child: CircularProgressIndicator()),
                   );
                 }
                 return ArticleCard(
                   article: articles[index],
                   onTap: () {
-                    // TODO: Open article
-                    context.push('/details', extra: articles[index]);
+                    // ✅ Fixed: Now it only pushes ONE screen and passes ONE article
+                    context.push('/article-detail', extra: articles[index]);
                   },
                 );
               },
             ),
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()), // Loading indicator[cite: 2]
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Failed to load news.', style: Theme.of(context).textTheme.titleLarge), // Error state[cite: 2]
+              Text('Failed to load news.', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => ref.read(homeProvider.notifier).refresh(),

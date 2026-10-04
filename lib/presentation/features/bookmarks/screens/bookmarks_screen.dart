@@ -16,7 +16,19 @@ class BookmarksScreen extends ConsumerWidget {
         title: const Text('Saved Articles'),
       ),
       body: bookmarkedArticles.isEmpty
-          ? const Center(child: Text('No saved articles yet.'))
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.bookmark_border, size: 64, color: Colors.grey.shade400),
+            const SizedBox(height: 16),
+            Text(
+              'No saved articles yet.',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.grey),
+            ),
+          ],
+        ),
+      )
           : ListView.builder(
         itemCount: bookmarkedArticles.length,
         itemBuilder: (context, index) {
@@ -24,7 +36,8 @@ class BookmarksScreen extends ConsumerWidget {
           return ArticleCard(
             article: article,
             onTap: () {
-              context.push('/details', extra: article);
+              // ✅ Fixed the route name here!
+              context.push('/article-detail', extra: article);
             },
           );
         },

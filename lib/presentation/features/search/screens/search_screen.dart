@@ -5,7 +5,6 @@ import 'package:news_reader_app/presentation/features/search/screens/search_prov
 
 import '../../../widgets/article_card.dart';
 
-
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
 
@@ -65,7 +64,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               return ArticleCard(
                 article: articles[index],
                 onTap: () {
-                  context.push('/details', extra: articles[index]);
+                  // Fixed route name here to match app_router.dart
+                  context.push('/article-detail', extra: articles[index]);
                 },
               );
             },

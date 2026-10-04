@@ -1,9 +1,11 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../data/models/article_model.dart';
 import '../../presentation/features/auth/screens/login_screen.dart';
 import '../../presentation/features/bookmarks/screens/bookmarks_screen.dart';
 import '../../presentation/features/home/home_screen.dart';
+import '../../presentation/features/home/screens/article_detail_screen.dart';
 import '../../presentation/features/search/screens/search_screen.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -34,6 +36,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/search',
       builder: (context, state) => SearchScreen(), // Navigates to your new Search Screen
+    ),
+    GoRoute(
+      path: '/article-detail',
+      builder: (context, state) {
+        final article = state.extra as ArticleModel;
+        // Do NOT put 'const' in front of ArticleDetailScreen here!
+        return ArticleDetailScreen(article: article);
+      },
     ),
   ],
 );

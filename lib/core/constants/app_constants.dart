@@ -1,5 +1,7 @@
 class AppConstants {
-  // We will use NewsAPI.org for real data. You can get a free key at newsapi.org
-  static const String baseUrl =  'https://corsproxy.io/?https://newsapi.org/v2/';
-  static const String apiKey = '3490ba62531e4627a5cb15cd8b547720';
+  // Swapped to GNews API for physical device compatibility
+  static const String baseUrl = "https://newsdata.io/api/1/latest? ";
+
+  // REPLACE THIS with your new GNews API key from gnews.io
+  static const String apiKey = "pub_9286ee9a30c84cb688ee0baffac1019a";
 }

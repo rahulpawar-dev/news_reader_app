@@ -31,7 +31,7 @@ class ArticleCard extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) =>
-                Container(height: 200, color: Colors.grey, child: Icon(Icons.broken_image, size: 50)),
+                    Container(height: 200, color: Colors.grey, child: const Icon(Icons.broken_image, size: 50)),
               )
             else
               Container(height: 200, color: Colors.grey[300], child: const Center(child: Icon(Icons.article, size: 50))),
