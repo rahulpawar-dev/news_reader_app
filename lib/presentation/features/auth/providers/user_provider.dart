@@ -27,7 +27,7 @@ class UserNotifier extends Notifier<UserProfile> {
   }
 
   void logout() {
-    // Make sure this exactly matches what app_router is checking!
+
     _box.delete('is_logged_in');
   }
 }

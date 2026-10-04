@@ -17,8 +17,9 @@ void main() async {
   await Hive.openBox('auth_box');
   await Hive.openBox('bookmarks_box');
   await Hive.openBox('settings_box');
+  await Hive.openBox('search_history_box');
   runApp(
-    // ProviderScope is required for Riverpod to work
+
     const ProviderScope(
       child: NewsReaderApp(),
     ),
@@ -31,7 +32,7 @@ class NewsReaderApp extends ConsumerWidget { // 1. Changed to ConsumerWidget
   @override
   Widget build(BuildContext context, WidgetRef ref) { // 2. Added WidgetRef
 
-    // 3. Listen to the current theme saved in Riverpod & Hive
+    // Listen to the current theme saved in Riverpod & Hive
     final currentThemeMode = ref.watch(themeProvider);
 
     return MaterialApp.router(
@@ -51,7 +52,7 @@ class NewsReaderApp extends ConsumerWidget { // 1. Changed to ConsumerWidget
         ),
         useMaterial3: true,
       ),
-      themeMode: currentThemeMode, // 4. Apply the Riverpod state here!
+      themeMode: currentThemeMode,
       routerConfig: appRouter,
     );
   }

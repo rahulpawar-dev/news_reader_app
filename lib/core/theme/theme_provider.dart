@@ -11,16 +11,16 @@ class ThemeNotifier extends Notifier<ThemeMode> {
 
   @override
   ThemeMode build() {
-    // Read the saved preference, default to light mode
+
     final isDark = _box.get('isDarkMode', defaultValue: false);
     return isDark ? ThemeMode.dark : ThemeMode.light;
   }
 
   void toggleTheme() {
     final isCurrentlyDark = state == ThemeMode.dark;
-    // Swap the state
+    // Swaping  the state
     state = isCurrentlyDark ? ThemeMode.light : ThemeMode.dark;
-    // Save the new choice to Hive
+
     _box.put('isDarkMode', !isCurrentlyDark);
   }
 }

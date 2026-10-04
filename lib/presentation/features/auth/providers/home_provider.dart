@@ -28,7 +28,15 @@ class HomeNotifier extends AsyncNotifier<List<ArticleModel>> {
     state = await AsyncValue.guard(() async {
       _currentPage = 1;
       _hasMore = true;
-      return _fetchArticles(page: _currentPage);
+
+      // 1. Fetch the fresh articles
+      final articles = await _fetchArticles(page: _currentPage);
+
+      // 2. Create a copy of the list and shuffle it to rearrange the order!
+      final shuffledArticles = List<ArticleModel>.from(articles)..shuffle();
+
+      // 3. Return the newly shuffled list to the UI
+      return shuffledArticles;
     });
   }
 

@@ -33,12 +33,31 @@ class BookmarksScreen extends ConsumerWidget {
         itemCount: bookmarkedArticles.length,
         itemBuilder: (context, index) {
           final article = bookmarkedArticles[index];
-          return ArticleCard(
-            article: article,
-            onTap: () {
-              // ✅ Fixed the route name here!
-              context.push('/article-detail', extra: article);
+          return Dismissible(
+            key: Key(article.title),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20),
+              child: const Icon(Icons.delete, color: Colors.white, size: 30),
+            ), // ✅ Closed the container properly
+            onDismissed: (direction) {
+              // ✅ Actually removes the bookmark from Hive
+              ref.read(bookmarkProvider.notifier).toggleBookmark(article);
+
+              // Show a quick popup confirming deletion
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Bookmark removed')),
+              );
             },
+            // ✅ The child property holds the ArticleCard!
+            child: ArticleCard(
+              article: article,
+              onTap: () {
+                context.push('/article-detail', extra: article);
+              },
+            ),
           );
         },
       ),
